@@ -1,12 +1,9 @@
 import {
   BarChart3,
   TrendingUp,
-  TrendingDown,
   DollarSign,
   Users,
   Package,
-  Clock,
-  Target,
 } from "lucide-react"
 import {
   Card,
@@ -23,7 +20,7 @@ import {
 } from "@/components/ui/chart"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis, Pie, PieChart, Cell, Line, LineChart } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, Pie, PieChart, Cell } from "recharts"
 
 const revenueData = [
   { month: "Jan", revenue: 125000, orders: 45 },

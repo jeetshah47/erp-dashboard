@@ -3,7 +3,6 @@ import {
   MapPin,
   Clock,
   CheckCircle2,
-  AlertCircle,
   Route,
   Package,
   Navigation,
@@ -25,7 +24,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis, Line, LineChart } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Line, LineChart } from "recharts"
 
 const deliveries = [
   {

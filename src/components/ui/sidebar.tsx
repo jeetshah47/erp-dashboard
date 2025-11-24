@@ -659,9 +659,8 @@ const SidebarMenuSkeleton = React.forwardRef<
   }
 >(({ className, showIcon = false, ...props }, ref) => {
   // Stable width between 50 to 90% based on component instance
+  const stableId = React.useId()
   const width = React.useMemo(() => {
-    // Use a stable hash based on the component instance
-    const stableId = React.useId()
     // Create a hash from the ID string
     let hash = 0
     for (let i = 0; i < stableId.length; i++) {
@@ -672,7 +671,7 @@ const SidebarMenuSkeleton = React.forwardRef<
     // Ensure positive value and map to 50-90% range
     const percentage = (Math.abs(hash) % 40) + 50
     return `${percentage}%`
-  }, [])
+  }, [stableId])
 
   return (
     <div
@@ -778,6 +777,7 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  // eslint-disable-next-line react-refresh/only-export-components
   useSidebar,
 }
 

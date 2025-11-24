@@ -2,10 +2,8 @@ import {
   Zap,
   CheckCircle2,
   Clock,
-  AlertCircle,
   ArrowRight,
   Settings,
-  Users,
   FileText,
 } from "lucide-react"
 import {

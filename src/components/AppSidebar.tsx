@@ -1,5 +1,4 @@
 import {
-  LayoutDashboard,
   ShoppingCart,
   ChefHat,
   Truck,
