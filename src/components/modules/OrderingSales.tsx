@@ -2,7 +2,6 @@ import {
   ShoppingCart,
   Package,
   Clock,
-  MapPin,
   User,
   Calendar,
   DollarSign,
@@ -18,143 +17,165 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart"
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis, Pie, PieChart, Cell } from "recharts"
 
 const orders = [
   {
     id: "ORD-001",
     customer: "John Smith",
+    email: "john.smith@example.com",
+    phone: "+1 234-567-8900",
     event: "Corporate Event - Tech Summit",
+    eventType: "Corporate",
     date: "2024-01-15",
+    time: "10:00 AM",
     status: "pending",
     amount: 12500,
     items: 45,
+    location: "Convention Center",
+    assignedTo: "Sales Team A",
+    priority: "High",
   },
   {
     id: "ORD-002",
     customer: "Sarah Johnson",
+    email: "sarah.j@example.com",
+    phone: "+1 234-567-8901",
     event: "Wedding Reception",
+    eventType: "Wedding",
     date: "2024-01-18",
+    time: "6:00 PM",
     status: "confirmed",
     amount: 18900,
     items: 78,
+    location: "Grand Hotel",
+    assignedTo: "Sales Team B",
+    priority: "Medium",
   },
   {
     id: "ORD-003",
     customer: "Mike Davis",
+    email: "mike.davis@example.com",
+    phone: "+1 234-567-8902",
     event: "Birthday Party",
+    eventType: "Private",
     date: "2024-01-20",
+    time: "2:00 PM",
     status: "in-progress",
     amount: 5600,
     items: 23,
+    location: "Private Venue",
+    assignedTo: "Sales Team A",
+    priority: "Low",
   },
   {
     id: "ORD-004",
     customer: "Emily Brown",
+    email: "emily.brown@example.com",
+    phone: "+1 234-567-8903",
     event: "Product Launch",
+    eventType: "Corporate",
     date: "2024-01-22",
+    time: "11:00 AM",
     status: "delivered",
     amount: 23400,
     items: 95,
+    location: "Office Complex",
+    assignedTo: "Sales Team C",
+    priority: "High",
+  },
+  {
+    id: "ORD-005",
+    customer: "David Wilson",
+    email: "david.w@example.com",
+    phone: "+1 234-567-8904",
+    event: "Conference",
+    eventType: "Corporate",
+    date: "2024-01-24",
+    time: "9:00 AM",
+    status: "confirmed",
+    amount: 15200,
+    items: 62,
+    location: "Downtown Convention Center",
+    assignedTo: "Sales Team B",
+    priority: "High",
+  },
+  {
+    id: "ORD-006",
+    customer: "Lisa Anderson",
+    email: "lisa.a@example.com",
+    phone: "+1 234-567-8905",
+    event: "Gala Dinner",
+    eventType: "Fundraiser",
+    date: "2024-01-25",
+    time: "7:00 PM",
+    status: "pending",
+    amount: 28700,
+    items: 120,
+    location: "Grand Hotel",
+    assignedTo: "Sales Team A",
+    priority: "High",
   },
 ]
 
 const liveOrders = [
   {
-    id: "ORD-005",
-    customer: "David Wilson",
-    event: "Conference",
-    location: "Downtown Convention Center",
-    status: "preparing",
-    timeRemaining: "2h 30m",
-  },
-  {
-    id: "ORD-006",
-    customer: "Lisa Anderson",
-    event: "Gala Dinner",
-    location: "Grand Hotel",
-    status: "ready",
-    timeRemaining: "1h 15m",
-  },
-  {
     id: "ORD-007",
     customer: "Robert Taylor",
     event: "Team Building",
     location: "Beach Resort",
+    status: "preparing",
+    timeRemaining: "2h 30m",
+    items: 45,
+    amount: 12500,
+    assignedTo: "Kitchen Team A",
+    priority: "High",
+  },
+  {
+    id: "ORD-008",
+    customer: "Jennifer Martinez",
+    event: "Corporate Lunch",
+    location: "Business District",
+    status: "ready",
+    timeRemaining: "1h 15m",
+    items: 30,
+    amount: 8900,
+    assignedTo: "Kitchen Team B",
+    priority: "Medium",
+  },
+  {
+    id: "ORD-009",
+    customer: "Michael Chen",
+    event: "Product Demo",
+    location: "Tech Hub",
     status: "out-for-delivery",
     timeRemaining: "45m",
+    items: 25,
+    amount: 6700,
+    assignedTo: "Delivery Team A",
+    priority: "High",
+  },
+  {
+    id: "ORD-010",
+    customer: "Amanda White",
+    event: "Networking Event",
+    location: "City Center",
+    status: "preparing",
+    timeRemaining: "3h 00m",
+    items: 55,
+    amount: 16800,
+    assignedTo: "Kitchen Team A",
+    priority: "Medium",
   },
 ]
 
-const revenueData = [
-  { month: "Jan", revenue: 125000, orders: 45 },
-  { month: "Feb", revenue: 145000, orders: 52 },
-  { month: "Mar", revenue: 138000, orders: 48 },
-  { month: "Apr", revenue: 167000, orders: 61 },
-  { month: "May", revenue: 152000, orders: 55 },
-  { month: "Jun", revenue: 189000, orders: 68 },
-]
-
-const orderStatusData = [
-  { name: "Delivered", value: 156, color: "hsl(var(--chart-1))" },
-  { name: "In Progress", value: 45, color: "hsl(var(--chart-2))" },
-  { name: "Pending", value: 23, color: "hsl(var(--chart-3))" },
-  { name: "Confirmed", value: 23, color: "hsl(var(--chart-4))" },
-]
-
-const dailyOrdersData = [
-  { day: "Mon", orders: 12, revenue: 45000 },
-  { day: "Tue", orders: 15, revenue: 58000 },
-  { day: "Wed", orders: 18, revenue: 67000 },
-  { day: "Thu", orders: 14, revenue: 52000 },
-  { day: "Fri", orders: 22, revenue: 89000 },
-  { day: "Sat", orders: 28, revenue: 112000 },
-  { day: "Sun", orders: 20, revenue: 78000 },
-]
-
-const revenueChartConfig = {
-  revenue: {
-    label: "Revenue",
-    color: "hsl(var(--chart-1))",
-  },
-  orders: {
-    label: "Orders",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
-
-const orderStatusChartConfig = {
-  Delivered: {
-    label: "Delivered",
-    color: "hsl(var(--chart-1))",
-  },
-  "In Progress": {
-    label: "In Progress",
-    color: "hsl(var(--chart-2))",
-  },
-  Pending: {
-    label: "Pending",
-    color: "hsl(var(--chart-3))",
-  },
-  Confirmed: {
-    label: "Confirmed",
-    color: "hsl(var(--chart-4))",
-  },
-} satisfies ChartConfig
 
 export function OrderingSales() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="text-left">
           <h2 className="text-3xl font-bold tracking-tight">Ordering & Sales</h2>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mt-2">
             Manage customer orders, event details, and live order tracking
           </p>
         </div>
@@ -214,165 +235,34 @@ export function OrderingSales() {
         </Card>
       </div>
 
-      {/* Charts Row */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue & Orders Trend</CardTitle>
-            <CardDescription>Revenue and order volume over the last 6 months</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer config={revenueChartConfig}>
-              <AreaChart
-                accessibilityLayer
-                data={revenueData}
-                margin={{
-                  left: 12,
-                  right: 12,
-                }}
-              >
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="month"
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={8}
-                />
-                <YAxis
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={8}
-                  tickFormatter={(value) => `$${value / 1000}k`}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent indicator="line" />}
-                />
-                <Area
-                  dataKey="revenue"
-                  type="natural"
-                  fill="var(--color-revenue)"
-                  fillOpacity={0.4}
-                  stroke="var(--color-revenue)"
-                />
-                <Area
-                  dataKey="orders"
-                  type="natural"
-                  fill="var(--color-orders)"
-                  fillOpacity={0.4}
-                  stroke="var(--color-orders)"
-                />
-              </AreaChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Order Status Distribution</CardTitle>
-            <CardDescription>Current distribution of orders by status</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer config={orderStatusChartConfig}>
-              <PieChart>
-                <Pie
-                  data={orderStatusData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                >
-                  {orderStatusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <ChartTooltip content={<ChartTooltipContent />} />
-              </PieChart>
-            </ChartContainer>
-            <div className="mt-4 space-y-2">
-              {orderStatusData.map((item) => (
-                <div key={item.name} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="h-3 w-3 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span>{item.name}</span>
-                  </div>
-                  <span className="font-medium">{item.value} orders</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Weekly Performance */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Weekly Performance</CardTitle>
-          <CardDescription>Daily orders and revenue for the current week</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ChartContainer config={revenueChartConfig}>
-            <BarChart
-              accessibilityLayer
-              data={dailyOrdersData}
-              margin={{
-                left: 12,
-                right: 12,
-              }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="day"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-              />
-              <YAxis
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                tickFormatter={(value) => `$${value / 1000}k`}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="dot" />}
-              />
-              <Bar
-                dataKey="revenue"
-                fill="var(--color-revenue)"
-                radius={[4, 4, 0, 0]}
-              />
-              <Bar
-                dataKey="orders"
-                fill="var(--color-orders)"
-                radius={[4, 4, 0, 0]}
-              />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-      </Card>
-
       {/* Live Order Tracking */}
       <Card>
         <CardHeader>
           <CardTitle>Live Order Tracking</CardTitle>
           <CardDescription>Real-time status of active orders</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {liveOrders.map((order) => (
-              <div
-                key={order.id}
-                className="flex items-center justify-between rounded-lg border p-4"
-              >
-                <div className="flex items-center gap-4">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold">{order.id}</span>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b bg-muted/50">
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Order ID</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Customer</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Event</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Status</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Items</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Amount</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Time Remaining</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {liveOrders.map((order) => (
+                  <tr key={order.id} className="border-b transition-colors hover:bg-muted/50">
+                    <td className="p-4 align-middle font-medium whitespace-nowrap">{order.id}</td>
+                    <td className="p-4 align-middle whitespace-nowrap">{order.customer}</td>
+                    <td className="p-4 align-middle">{order.event}</td>
+                    <td className="p-4 align-middle whitespace-nowrap">
                       <Badge
                         variant={
                           order.status === "ready"
@@ -384,27 +274,24 @@ export function OrderingSales() {
                       >
                         {order.status.replace("-", " ")}
                       </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {order.customer} - {order.event}
-                    </p>
-                    <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
-                      <MapPin className="h-3 w-3" />
-                      <span>{order.location}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    <Clock className="h-4 w-4" />
-                    <span>{order.timeRemaining}</span>
-                  </div>
-                  <Button variant="outline" size="sm" className="mt-2">
-                    View Details
-                  </Button>
-                </div>
-              </div>
-            ))}
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap">{order.items}</td>
+                    <td className="p-4 align-middle font-medium whitespace-nowrap">${order.amount.toLocaleString()}</td>
+                    <td className="p-4 align-middle whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-medium">{order.timeRemaining}</span>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap">
+                      <Button variant="outline" size="sm">
+                        View
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>
@@ -422,17 +309,50 @@ export function OrderingSales() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {orders.map((order) => (
-              <div
-                key={order.id}
-                className="flex items-center justify-between rounded-lg border p-4 hover:bg-accent/50 transition-colors"
-              >
-                <div className="flex items-center gap-4 flex-1">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-semibold">{order.id}</span>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b bg-muted/50">
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Order ID</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Customer</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Event</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Date</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Status</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Items</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Amount</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order.id} className="border-b transition-colors hover:bg-muted/50">
+                    <td className="p-4 align-middle font-medium whitespace-nowrap">{order.id}</td>
+                    <td className="p-4 align-middle">
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-muted-foreground" />
+                        <div>
+                          <div className="font-medium">{order.customer}</div>
+                          <div className="text-xs text-muted-foreground">{order.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle">
+                      <div>
+                        <div className="font-medium">{order.event}</div>
+                        <div className="text-xs text-muted-foreground">{order.eventType}</div>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <div className="text-sm">
+                          <div>{order.date}</div>
+                          <div className="text-muted-foreground">{order.time}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap">
                       <Badge
                         variant={
                           order.status === "delivered"
@@ -446,33 +366,18 @@ export function OrderingSales() {
                       >
                         {order.status}
                       </Badge>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-muted-foreground" />
-                        <span>{order.customer}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <span>{order.date}</span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-2">{order.event}</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-bold">${order.amount.toLocaleString()}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {order.items} items
-                    </div>
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <Button variant="outline" size="sm">
-                    View
-                  </Button>
-                </div>
-              </div>
-            ))}
+                    </td>
+                    <td className="p-4 align-middle whitespace-nowrap">{order.items}</td>
+                    <td className="p-4 align-middle font-medium whitespace-nowrap">${order.amount.toLocaleString()}</td>
+                    <td className="p-4 align-middle whitespace-nowrap">
+                      <Button variant="outline" size="sm">
+                        View
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>

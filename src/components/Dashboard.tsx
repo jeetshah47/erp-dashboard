@@ -7,30 +7,37 @@ import {
 import { AppSidebar } from "@/components/AppSidebar"
 import { Separator } from "@/components/ui/separator"
 import { OrderingSales } from "@/components/modules/OrderingSales"
-import { KitchenProduction } from "@/components/modules/KitchenProduction"
-import { LogisticsDelivery } from "@/components/modules/LogisticsDelivery"
-import { AssetInventory } from "@/components/modules/AssetInventory"
-import { WorkflowAutomation } from "@/components/modules/WorkflowAutomation"
-import { ConsentManagement } from "@/components/modules/ConsentManagement"
 import { Reporting } from "@/components/modules/Reporting"
+import { LockedModule } from "@/components/modules/LockedModule"
+
+// Define which modules are unlocked
+const UNLOCKED_MODULES = ["ordering", "reporting"]
+
+// Module name mapping for locked message
+const MODULE_NAMES: Record<string, string> = {
+  kitchen: "Kitchen & Production",
+  logistics: "Logistics & Delivery",
+  assets: "Asset & Inventory",
+  workflow: "Workflow Automation",
+  consent: "Consent Management",
+}
 
 export function Dashboard() {
-  const [activeModule, setActiveModule] = useState("ordering")
+  const [activeModule, setActiveModule] = useState("reporting")
+
+  const isModuleLocked = (module: string) => {
+    return !UNLOCKED_MODULES.includes(module)
+  }
 
   const renderModule = () => {
+    // Check if module is locked
+    if (isModuleLocked(activeModule)) {
+      return <LockedModule moduleName={MODULE_NAMES[activeModule] || activeModule} />
+    }
+
     switch (activeModule) {
       case "ordering":
         return <OrderingSales />
-      case "kitchen":
-        return <KitchenProduction />
-      case "logistics":
-        return <LogisticsDelivery />
-      case "assets":
-        return <AssetInventory />
-      case "workflow":
-        return <WorkflowAutomation />
-      case "consent":
-        return <ConsentManagement />
       case "reporting":
         return <Reporting />
       default:
@@ -49,7 +56,7 @@ export function Dashboard() {
             <h1 className="text-lg font-semibold">ERP Dashboard</h1>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 md:p-6 lg:p-8">
+        <div className="flex flex-1 flex-col gap-4 p-4 md:p-6 lg:p-8 overflow-x-hidden">
           {renderModule()}
         </div>
       </SidebarInset>

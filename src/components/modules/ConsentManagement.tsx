@@ -176,9 +176,9 @@ export function ConsentManagement() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="text-left">
           <h2 className="text-3xl font-bold tracking-tight">Consent Management</h2>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mt-2">
             Collect and manage client consent securely within the system
           </p>
         </div>

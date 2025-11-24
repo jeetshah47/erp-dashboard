@@ -174,9 +174,9 @@ export function LogisticsDelivery() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="text-left">
           <h2 className="text-3xl font-bold tracking-tight">Logistics & Delivery</h2>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mt-2">
             Route planning, delivery tracking, and asset return confirmation
           </p>
         </div>

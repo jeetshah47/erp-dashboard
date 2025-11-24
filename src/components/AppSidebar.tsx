@@ -5,9 +5,9 @@ import {
   Package,
   Zap,
   FileCheck,
-  BarChart3,
   Settings,
   Home,
+  Lock,
 } from "lucide-react"
 import {
   Sidebar,
@@ -28,36 +28,37 @@ const menuItems = [
     title: "Ordering & Sales",
     icon: ShoppingCart,
     value: "ordering",
+    locked: false,
   },
   {
     title: "Kitchen & Production",
     icon: ChefHat,
     value: "kitchen",
+    locked: true,
   },
   {
     title: "Logistics & Delivery",
     icon: Truck,
     value: "logistics",
+    locked: true,
   },
   {
     title: "Asset & Inventory",
     icon: Package,
     value: "assets",
+    locked: true,
   },
   {
     title: "Workflow Automation",
     icon: Zap,
     value: "workflow",
+    locked: true,
   },
   {
     title: "Consent Management",
     icon: FileCheck,
     value: "consent",
-  },
-  {
-    title: "Reporting & Analytics",
-    icon: BarChart3,
-    value: "reporting",
+    locked: true,
   },
 ]
 
@@ -101,6 +102,25 @@ export function AppSidebar({ activeTab, onTabChange }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  tooltip="Home"
+                  isActive={activeTab === "reporting"}
+                  onClick={() => handleModuleClick("reporting")}
+                >
+                  <a href="#reporting" onClick={(e) => e.preventDefault()}>
+                    <Home className="size-4" />
+                    <span>Home</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
           <SidebarGroupLabel>Modules</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -108,13 +128,17 @@ export function AppSidebar({ activeTab, onTabChange }: AppSidebarProps) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    tooltip={item.title}
+                    tooltip={item.locked ? `${item.title} (Locked)` : item.title}
                     isActive={activeTab === item.value}
                     onClick={() => handleModuleClick(item.value)}
+                    className={item.locked ? "opacity-60" : ""}
                   >
                     <a href={`#${item.value}`} onClick={(e) => e.preventDefault()}>
                       <item.icon />
                       <span>{item.title}</span>
+                      {item.locked && (
+                        <Lock className="ml-auto h-3 w-3 text-muted-foreground" />
+                      )}
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
