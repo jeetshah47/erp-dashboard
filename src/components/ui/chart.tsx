@@ -366,5 +366,3 @@ export {
   ChartStyle,
 }
 
-export type { ChartConfig }
-
